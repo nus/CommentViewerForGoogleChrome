@@ -1,0 +1,21 @@
+{
+  "name": "コメントビュワー for Google Chrome",
+  "description": "ニコニコ生放送のコメントビュワー",
+  "version": "0.1",
+  "background_page": "background.html",
+  "permissions": [
+    "http://watch.live.nicovideo.jp/",
+    "http://live.nicovideo.jp/watch/",
+    "http://www.nicovideo.jp/user/"
+  ],
+  "icons": {
+    "48": "icon.png"
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "plugins": [
+    {"path": "Release/NiconamaClientPlugin.dll"}
+  ]
+}
+

@@ -1,0 +1,7 @@
+[binding_model=by_value, include="NiconamaClient.h"] class NiconamaClient {
+	NiconamaClient();
+    bool connect(std::string addr, std::string port);
+    void requestComment(std::string thread, std::string numOfComments);
+    std::string getComment();
+    void close();
+};

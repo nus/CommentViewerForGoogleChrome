@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>test NiconamaClient.dll</title>
+        <meta http-equiv="Content-Style-Type" content="text/css">
+        <meta http-equiv="Content-Script-Type" content="text/javascript">
+        <style type="text/css" title="currentStyle">
+            @import "css/dataTables/demo_page.css";
+            @import "css/dataTables/demo_table.css";
+            @import "css/dataTables/demo_table_jui.css";
+            @import "css/popup_style.css";
+        </style>
+        <script type="text/javascript" src="lib/jquery.js"></script>
+        <script type="text/javascript" src="lib/jquery.dataTables.js"></script>
+        <script type="text/javascript" src="CommentViewer.js"></script>
+        <script type="text/javascript">
+        var oTable;
+        var giRedraw = false;
+        function init()
+        {
+            document.title = getLvTitle();
+            initPlugin();
+            getPlayerstatus(getNiconamaLiveId());
+            setCommentServerInfo()
+        }
+        
+        function getLvTitle()
+        {
+            return decodeURI(document.URL).match(/t=.*$/)[0].slice('t='.length, -1);
+        }
+
+        
+        function getNiconamaLiveId()
+        {
+            return document.URL.match(/lv\d+/);    // lvNNNNNNの部分のみ切り取り
+        }
+        
+        function writeClickedComment(text, id) {
+            document.getElementById(id).innerHTML = text;
+        }
+        
+        $("document").ready(function() {
+            /* Add a click handler to the rows - this could be used as a callback */
+            $("#comments_table tbody").click(function(event) {
+                $(oTable.fnSettings().aoData).each(function (){
+                    $(this.nTr).removeClass('row_selected');
+                });
+                 var a= $(event.target.parentNode).addClass('row_selected');
+                
+                writeClickedComment($(event.target.parentNode)[0].outerHTML, "clicked-comment");
+            });
+            
+            /* Init the table */
+            oTable = $("#comments_table").dataTable({
+                        "bPaginate": true,
+                        "bLengthChange": true,
+                        "bFilter": true,
+                        "bSort": true,
+                        "bInfo": true,
+                        "bAutoWidth": false,
+                        "bStateSave": true      // ソート順などの状態の保存
+            });
+            
+            oTable.fnFilter("");
+            
+        });
+        
+        /* Get the rows which are currently selected */
+        function fnGetSelected( oTableLocal )
+        {
+            var aReturn = new Array();
+            var aTrs = oTableLocal.fnGetNodes();
+            
+            for ( var i=0 ; i < aTrs.length ; i++ )
+            {
+                if ( $(aTrs[i]).hasClass('row_selected') )
+                {
+                    aReturn.push( aTrs[i] );
+                }
+            }
+            return aReturn;
+        }
+        
+        
+        </script>
+    </head>
+    <body onload="init()" onUnload="close()">
+        <div id="content-area">
+            <table cellpadding="0" cellspacing="0" border="0" class="display"  id="comments_table">
+                <thead>
+                    <tr>
+                        <th width="10">No.</th>
+                        <th width="200">コメント</th>
+                        <th widht="100">ユーザID</th>
+                        <th>premium</th>
+                    </tr>
+                </thead>
+                <tbody id="comments">
+                </tbody>
+            </table>
+            <object type="application/x-winniconamaclient" id="plugin" width="0" height="0"></object>
+            <div id="body-footer">
+                <table>
+                    <tbody id="clicked-comment">
+                    </tbody>
+                </table>
+                <div >
+                </div>
+                <script type="text/javascript">
+                function setProgressbar(val) {
+                    document.getElementsByTagName("progress")[0].value = val;
+                }
+                </script>
+                <button id="get-nickname">ニックネームを付ける</button>
+                <script type="text/javascript">
+                $("#get-nickname").click(function(e) {
+                    if(document.getElementsByClassName("row_selected").length == 0) {
+                        window.alert("コメントを選択してください");
+                    }
+                    var selectedCommentInfo = document.getElementsByClassName("row_selected")[0].cells;
+                    if((!selectedCommentInfo) || (selectedCommentInfo.length < 3)) {
+                        window.alert("コメントを選択してください");
+                        return ;
+                    }
+                    
+                    var userId = getUserIdByNo(selectedCommentInfo[0].innerText);
+                    if(userId == "") {
+                        return ;
+                    }
+                    
+                    var nickName = hearNickNameFromUser(userId);
+                    if(!nickName) {
+                        return ;
+                    }
+                    
+                    setNickNameByUserId(userId, nickName);
+                    
+                    updateUserIdSection(userId, nickName);
+                });
+                </script>
+            </div>
+        </div>
+    </body>
+</html>

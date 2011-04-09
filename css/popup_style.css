@@ -1,0 +1,62 @@
+body {
+margin: 0;
+padding: 0em 0 3em 0; // HERE
+font-family: 'MS PGothic', 'ＭＳ Ｐゴシック';
+font-size: 16px;
+line-height: 18px;
+}
+
+* html body {
+overflow: hidden;
+}
+
+/*div#body-header {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 0em;    // HERE
+background-color: #EE9;
+color: #FFF;
+display: none;
+}*/
+
+div#content-area {
+height: 100%;
+overflow: auto;
+}
+
+div#body-footer {
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 3em;
+background-color: #EEE;
+color: #000;
+}
+
+#input_filter{
+width: 15em;
+position: absolute;
+right: 0.5em;
+top: 0.2em;
+}
+
+button#get-nickname {
+position: absolute;
+right: 1em;
+bottom: 0.5em;
+padding: 0.5em 1em;
+font-weight: normal;
+}
+
+#comments_table_filter {
+}
+
+table.display td {
+font-family: 'MS PGothic', 'ＭＳ Ｐゴシック';
+font-size: 16px;
+line-height: 18px;
+}
+

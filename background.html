@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<script>
+		/*
+		 \brief ニコ生のURLかどうか判定
+		 \param url 調べたいURL
+		 \retval ニコ生URLならtrue それ以外ならfalse
+		*/
+		function isNiconamaURL(url)
+		{
+			// サンプルURL : http://live.nicovideo.jp/watch/lv123456789?mypage_nicorepo
+			var ret = false;
+
+			if(url.search("http://live.nicovideo.jp/watch/lv") != -1) {
+				// ニコ生URLの場合
+				ret = true;
+			}
+			else {
+				ret = false;
+			}
+
+			return ret;
+		}
+
+		/*
+		 \brief ニコ生の放送IDを取得
+		 \retval 放送ID
+		*/
+		function getNiconamaLiveId(url)
+		{
+			return url.match(/lv\d+/);	// lvNNNNNNの部分のみ切り取り
+		}
+
+
+		// この関数を機にpopul.htmlが開かれる
+		chrome.browserAction.onClicked.addListener(function(tab) {
+			// ニコ生の放送URLで無かったら終了
+			if(!isNiconamaURL(tab.url)) {
+				return ;
+			}
+
+			var lvId = getNiconamaLiveId(tab.url.toString());	// 入るべき値の例 "lv123456789"
+
+			window.open("popup.html?" + lvId + "&t=" + tab.title, "mywindow","status=-1, height=360, width=900");
+		});
+</script>
+</head>
+</html>
