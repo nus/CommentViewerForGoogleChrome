@@ -83,7 +83,7 @@ manifestfile = '''
   "plugins": [
     {"path": "NiconamaClientPlugin.dll"}
   ],
-  "update_url": "https://github.com/nus/CommentViewerForGoogleChrome/raw/autoupdating-add/updates.xml"
+  "update_url": "https://github.com/downloads/nus/CommentViewerForGoogleChrome/updates.xml"
 }
 ''' % version
 with open(out_dir + 'manifest.json', 'w') as f:
@@ -91,8 +91,7 @@ with open(out_dir + 'manifest.json', 'w') as f:
     f.write(manifestfile)
 
 # アップデート通知ファイル
-updates_xml = '''
-<?xml version='1.0' encoding='UTF-8'?>
+updates_xml = '''<?xml version='1.0' encoding='UTF-8'?>
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
   <app appid='gmngaokcabjmeocdnkenaipbdnbpbclg'>
     <updatecheck codebase='https://github.com/downloads/nus/CommentViewerForGoogleChrome/NC4GC.crx' version='%s' />
