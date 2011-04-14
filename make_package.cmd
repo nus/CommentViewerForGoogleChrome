@@ -1,4 +1,4 @@
-rem @echo off
+@echo off
 
 set CHROME_PATH="C:\Program Files\Google\Chrome\Application"
 set EXTENSION_DIR=%CD%\NC4GC

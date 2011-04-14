@@ -31,7 +31,7 @@ THE SOFTWARE.
 import os
 import shutil
 
-version = '0.0.1'
+version = '0.0.2'
 out_dir = './NC4GC/'  # コピー先のディレクトリ
 
 
@@ -82,10 +82,26 @@ manifestfile = '''
   },
   "plugins": [
     {"path": "NiconamaClientPlugin.dll"}
-  ]
+  ],
+  "update_url": "https://github.com/nus/CommentViewerForGoogleChrome/blob/autoupdating-add/updates.xml"
 }
 ''' % version
 with open(out_dir + 'manifest.json', 'w') as f:
     print(f.name)
     f.write(manifestfile)
 
+# アップデート通知ファイル
+updates_xml = '''
+<?xml version='1.0' encoding='UTF-8'?>
+<gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
+  <app appid='gmngaokcabjmeocdnkenaipbdnbpbclg'>
+    <updatecheck codebase='https://github.com/nus/CommentViewerForGoogleChrome/raw/autoupdating-add/mte_v2.crx' version='%s' />
+  </app>
+</gupdate>
+''' % version
+with open('updates.xml', 'w') as f:
+    print(f.name)
+    f.write(updates_xml)
+
+# Chromeによる拡張機能のパッケージを生成
+os.system("make_package.cmd")
