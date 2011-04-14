@@ -31,7 +31,8 @@ THE SOFTWARE.
 import os
 import shutil
 
-out_dir = '../NC4GC/'  # コピー先のディレクトリ
+version = '0.0.1'
+out_dir = './NC4GC/'  # コピー先のディレクトリ
 
 
 # とりあえずコピー先のディレクトリを消去し、再度mkdir
@@ -66,7 +67,7 @@ manifestfile = '''
 {
   "name": "コメントビュワー for Google Chrome",
   "description": "ニコニコ生放送のコメントビュワー",
-  "version": "0.1",
+  "version": "%s",
   "background_page": "background.html",
   "permissions": [
     "http://watch.live.nicovideo.jp/",
@@ -83,7 +84,7 @@ manifestfile = '''
     {"path": "NiconamaClientPlugin.dll"}
   ]
 }
-'''
+''' % version
 with open(out_dir + 'manifest.json', 'w') as f:
     print(f.name)
     f.write(manifestfile)
