@@ -31,8 +31,10 @@ THE SOFTWARE.
 import os
 import shutil
 
-version = '0.0.4'
+version = '0.0.5'
 out_dir = './NC4GC/'  # コピー先のディレクトリ
+
+print('version:' + version)
 
 
 # とりあえずコピー先のディレクトリを消去し、再度mkdir
