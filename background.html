@@ -16,6 +16,9 @@
 				// ニコ生URLの場合
 				ret = true;
 			}
+			else if(url.search("http://live.nicovideo.jp/watch/co") != -1) {
+			    ret = true;
+			}
 			else {
 				ret = false;
 			}
@@ -29,7 +32,7 @@
 		*/
 		function getNiconamaLiveId(url)
 		{
-			return url.match(/lv\d+/);	// lvNNNNNNの部分のみ切り取り
+			return url.match(/lv\d+/) || url.match(/co\d+/);	// lvNNNNNNの部分のみ切り取り
 		}
 
 

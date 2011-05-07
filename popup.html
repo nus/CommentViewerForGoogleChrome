@@ -32,7 +32,7 @@
         
         function getNiconamaLiveId()
         {
-            return document.URL.match(/lv\d+/);    // lvNNNNNNの部分のみ切り取り
+            return document.URL.match(/lv\d+/) || document.URL.match(/co\d+/);    // lvNNNNNNの部分のみ切り取り
         }
         
         function writeClickedComment(text, id) {
