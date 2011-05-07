@@ -78,7 +78,6 @@ public:
         socket.flush();
 
 		// boost::thread_group::create_thread‚ÌÀ‘•‚ğQl‚É‚µ‚½
-		//std::auto_ptr<boost::thread> tmp_thr(new boost::thread(boost::bind(&NiconamaClient::impl::getCommentsThread, this)));
 		com_thread = new boost::thread(boost::bind(&NiconamaClient::impl::getCommentsThread, this));
     }
     
@@ -159,12 +158,6 @@ private:
 					break;
 				}
 				
-				/*if(boost::contains(comment_xml, "premium=\"2\"") && boost::contains(comment_xml, ">/disconnect</chat>")) {
-					socket.close();
-					comments_qu.push("/disconnect");
-					break;
-				}*/
-
 				comments_qu.push(comment_xml);
 			}
 		}
