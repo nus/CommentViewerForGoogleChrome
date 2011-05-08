@@ -53,7 +53,8 @@
             /* Init the table */
             oTable = $("#comments_table").dataTable({
                         "bPaginate": true,
-                        "bLengthChange": true,
+                        "bLengthChange": false,
+                        "iDisplayLength": -1,   // 全件表示
                         "bFilter": true,
                         "bSort": true,
                         "bInfo": true,
