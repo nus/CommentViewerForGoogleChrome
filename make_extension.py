@@ -31,7 +31,7 @@ THE SOFTWARE.
 import os
 import shutil
 
-version = '0.0.5'
+version = '0.0.6'
 out_dir = './NC4GC/'  # コピー先のディレクトリ
 
 print('version:' + version)
