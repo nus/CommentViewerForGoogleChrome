@@ -98,10 +98,12 @@ function addCommentInfo(id)
     if((comDom.comment == "/disconnect") && (comDom.premium == "3")) {
         close();
     }
+
+    comDom.comment = commentFilter(comDom.comment);
     
     $("#" + id).dataTable().fnAddData([
         comDom.no ? comDom.no : "",   // 公式生放送の場合だと番号がない
-        commentFilter(comDom.comment),
+        decorateComment(comDom),
         getNickNameByUserId(comDom.user_id),
         comDom.premium
     ]);
@@ -223,6 +225,29 @@ function commentFilter(commentText)
     c = c.replace(/\n/g, "<br>");
     
     return c;
+}
+
+/*
+ \brief コメントをHTMLで装飾
+ \param comDom コメント情報が格納されているオブジェクト
+ \retval 装飾済みコメント
+*/
+function decorateComment(comDom)
+{
+    var ret = comDom.comment;
+
+    if(comDom.premium == 1 || comDom.preminum == null) {
+        // ビデオIDをがコメントに含まれていたらリンクを生成する
+        var sms = ret.match(/sm\d+/g);
+        if(sms) {
+            for(var i = 0; i < sms.length; i++) {
+                sm = sms[i];
+                ret = ret.replace(sm, '<a href=\"http://www.nicovideo.jp/watch/' + sm + '\" target=\"_blank\">' + sm + '</a>')
+            }
+        }
+    }
+
+    return ret;
 }
 
 /*
